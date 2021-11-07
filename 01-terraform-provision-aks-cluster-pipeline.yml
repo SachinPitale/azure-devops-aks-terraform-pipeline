@@ -1,6 +1,7 @@
 ---
 
-trigger: none
+trigger:
+  - master
 
 pool:
   vmImage: ubuntu-latest
@@ -18,4 +19,27 @@ stages:
         targetPath: '$(System.DefaultWorkingDirectory)/terraform-manifests'
         artifactName: 'terraform-manifests-out'
         publishLocation: 'pipeline'
+    - task: TerraformInstaller@0
+      displayName: Install Terraform latest version
+      inputs:
+        terraformVersion: 'latest'
+    - task: TerraformCLI@0
+      displayName: Terraform init
+      inputs:
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+        backendType: 'azurerm'
+        backendServiceArm: 'terraform-aks-azurerm-svc-con'
+        backendAzureRmResourceGroupName: 'terraform-storage-rg'
+        backendAzureRmStorageAccountname: 'terraformstatexdaj'
+        backendAzureRmContainerName: 'tfstatefiles'
+        backendAzureRmKey: 'aks-base.tfstate'
+        allowTelemetryCollection: false
+    - task: TerraformCLI@0
+      displayName: Terraform Validate
+      inputs:
+        command: 'Validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/terraform-manifests'
+        allowTelemetryCollection: false 
+       
         
