@@ -93,6 +93,7 @@ stages:
 - stage: DeployQAAksCluster
   jobs:
   - deployment: DeployQAAksCluster
+    dependsOn: DeployAKSCluster
     displayName: DeployQAAksCluster
     pool:
       vmImage: ubuntu-latest
