@@ -90,8 +90,7 @@ stages:
               commandOptions: $(Pipeline.Workspace)/terraform-manifests-out/$(DEV_ENVIRONMENT)-$(Build.BuildId).out
               environmentServiceName: 'terraform-aks-azurerm-svc-con'
               allowTelemetryCollection: false
-- stage: DeployQAAksCluster
-  jobs:
+
   - deployment: DeployQAAksCluster
     dependsOn: DeployAKSCluster
     displayName: DeployQAAksCluster
