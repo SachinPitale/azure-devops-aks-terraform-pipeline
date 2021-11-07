@@ -56,7 +56,7 @@ stages:
     strategy:
       runOnce:
         deploy:
-        - steps:
+          steps:
           - task: DownloadSecureFile@1
             displayName: 
             name: sshkey
